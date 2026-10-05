@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Sitemap: https://ryansyahrielportfolio.vercel.app/sitemap.xml
