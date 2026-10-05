@@ -1,22 +1,15 @@
-const nav = document.querySelector('.nav');
-const glow = document.querySelector('.cursor-glow');
-
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 30);
-});
-
-window.addEventListener('mousemove', (e) => {
-  glow.style.left = e.clientX + 'px';
-  glow.style.top = e.clientY + 'px';
-});
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
-  });
-}, { threshold: 0.08 });
-
-document.querySelectorAll('section, .project, .timeline-item, .skill-group').forEach(el => {
-  el.classList.add('reveal');
-  observer.observe(el);
-});
+const root=document.documentElement,themeToggle=document.getElementById("themeToggle");
+const saved=localStorage.getItem("ryan-theme"); if(saved) root.dataset.theme=saved;
+themeToggle?.addEventListener("click",()=>{root.dataset.theme=root.dataset.theme==="light"?"dark":"light";localStorage.setItem("ryan-theme",root.dataset.theme)});
+const nav=document.querySelector(".nav"); window.addEventListener("scroll",()=>nav?.classList.toggle("scrolled",scrollY>25),{passive:true});
+const fallback=[
+{id:"kpi-dashboard",number:"01",category:"MANUFACTURING ANALYTICS",title:"Manufacturing KPI Analytics",description:"A multi-perspective manufacturing dashboard covering OAE, productivity, volume, reject rate, breakdown, loss time, and material variance.",tags:["Excel","Power Query","Dashboard"],type:"dashboard"},
+{id:"plaster-cutter",number:"02",category:"RELIABILITY / DATA",title:"Plaster Cutter Lifetime Analysis",description:"Tracking replacement sequence, machine assignment, shift-based lifetime, and stability of plaster cutter IDs to identify abnormal patterns.",tags:["Power Query","Excel","Root Cause"],type:"lifetime"},
+{id:"5s-safety",number:"03",category:"DIGITALIZATION",title:"5S + Safety Inspection System",description:"Digital inspection and monitoring concept for Sort, Set in Order, Shine, Safety, and sustainment tracking.",tags:["Excel","Power Query","Standardization"],type:"check"},
+{id:"work-study",number:"04",category:"PROCESS OPTIMIZATION",title:"Work Study & Process Improvement",description:"Time-study and process-analysis work covering packing, capping, bottle insertion, operator methods, and productivity variation.",tags:["Time Study","Moving Average","Analysis"],type:"process"}
+];
+function art(type){if(type==="dashboard")return '<div class="project-art art-dashboard"><div class="mini-grid"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="chart"></div></div>';if(type==="lifetime")return '<div class="project-art art-lifetime"><div class="bars"><i style="height:35%"></i><i style="height:60%"></i><i style="height:48%"></i><i style="height:82%"></i><i style="height:55%"></i><i style="height:91%"></i><i style="height:68%"></i></div><div class="axis"></div></div>';if(type==="check")return '<div class="project-art art-check"><div class="check"><span>01</span><b>SORT</b><em>✓</em></div><div class="check"><span>02</span><b>SET IN ORDER</b><em>✓</em></div><div class="check"><span>03</span><b>SHINE</b><em>✓</em></div><div class="check"><span>04</span><b>SAFETY</b><em>!</em></div></div>';return '<div class="project-art art-process"><span class="node">INPUT</span><span class="arrow">→</span><span class="node">PROCESS</span><span class="arrow">→</span><span class="node">OUTPUT</span></div>'}
+function renderProjects(items){const grid=document.getElementById("projectGrid");if(!grid)return;grid.innerHTML=items.map((p,i)=>`<a class="project-card reveal visible" href="project.html?id=${encodeURIComponent(p.id)}"><div>${p.imageUrl?'<img class="project-image" src="'+p.imageUrl+'" alt="">':art(p.type||["dashboard","lifetime","check","process"][i%4])}</div><div class="project-meta"><span>${String(p.number||String(i+1).padStart(2,"0"))}</span><span>${p.category||"PROJECT"}</span></div><h3>${p.title}</h3><p>${p.description||""}</p><div class="project-tags">${(p.tags||[]).map(t=>'<span>'+t+'</span>').join("")}</div><span class="card-arrow">↗</span></a>`).join("")}
+fetch("/api/projects").then(r=>r.ok?r.json():Promise.reject()).then(data=>renderProjects(data.projects||fallback)).catch(()=>renderProjects(fallback));
+const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")}),{threshold:.08});
+document.querySelectorAll("section,.timeline article,.skills-grid>div").forEach(el=>{el.classList.add("reveal");observer.observe(el)});
