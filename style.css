@@ -10,3 +10,7 @@ html[data-theme=light]{--bg:#f3f0e9;--surface:#e9e5dc;--surface2:#ddd8ce;--text:
 
 /* Video introduction navigation link */
 .nav nav a.video-intro-link{color:var(--accent);white-space:nowrap}.nav nav a.video-intro-link:hover{color:var(--text)}
+
+/* CV download button */
+.hero-actions .cv-download{white-space:nowrap;gap:10px}.hero-actions .cv-download span{font-size:1.1em}
+@media(max-width:560px){.hero-actions .cv-download{flex:1 1 100%;justify-content:center}}
