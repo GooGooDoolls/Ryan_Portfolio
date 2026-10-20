@@ -9,8 +9,8 @@ let dragged=null;document.querySelectorAll("[data-drag]").forEach(el=>{el.ondrag
 function escapeHtml(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 function edit(id){const p=projects.find(x=>x.id===id);if(!p)return;["id","title","category","description","problem","approach","result"].forEach(k=>$(k).value=p[k]||"");$("tools").value=(p.tags||[]).join(", ");$("published").checked=p.published!==false;$("featured").checked=!!p.featured;$("thumbnail").value="";$("files").value="";scrollTo({top:0,behavior:"smooth"})}
 async function remove(id){if(!confirm("Delete this project?"))return;projects=projects.filter(p=>p.id!==id);projects.forEach((p,i)=>p.order=i);await api("POST",{projects});render()}
-$("loginBtn").onclick=async()=>{password=$("pw").value;try{await load();sessionStorage.setItem("portfolio_admin_password",password);$("login").hidden=true;$("app").hidden=false}catch{$("msg").textContent="Login failed. Check your password."}};
-if(password)load().then(()=>{$("login").hidden=true;$("app").hidden=false}).catch(()=>sessionStorage.removeItem("portfolio_admin_password"));
+$("loginBtn").onclick=async()=>{password=$("pw").value;try{await load();sessionStorage.setItem("portfolio_admin_password",password);$("login").hidden=true;$("app").hidden=false;document.dispatchEvent(new Event("portfolio-admin-ready"))}catch{$("msg").textContent="Login failed. Check your password."}};
+if(password)load().then(()=>{$("login").hidden=true;$("app").hidden=false;document.dispatchEvent(new Event("portfolio-admin-ready"))}).catch(()=>sessionStorage.removeItem("portfolio_admin_password"));
 $("logout").onclick=()=>{sessionStorage.removeItem("portfolio_admin_password");location.reload()};
 $("clear").onclick=()=>{$("form").reset();$("id").value="";$("published").checked=true};
 async function uploadFile(file){return upload("portfolio/files/"+Date.now()+"-"+crypto.randomUUID()+"-"+file.name,file,{access:"public",handleUploadUrl:"../api/upload",clientPayload:JSON.stringify({password})})}

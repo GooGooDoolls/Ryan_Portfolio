@@ -7,6 +7,36 @@
   <section id="login"><p>Manage projects, visibility, order, thumbnails, and project files.</p><input id="pw" class="admin-input" type="password" placeholder="Admin password"><button id="loginBtn" class="admin-btn">Enter</button><p id="msg"></p></section>
   <section id="app" hidden>
     <div class="admin-head"><div><p class="kicker">CONTENT MANAGEMENT</p><h2>Project library</h2></div><button id="logout" class="admin-btn ghost">Log out</button></div>
+
+    <section class="site-editor-panel">
+      <div class="admin-head"><div><p class="kicker">WEBSITE EDITOR</p><h2>Edit portfolio content</h2><p class="admin-muted">Edit your text, links, timeline and skills here. No coding needed.</p></div><button type="button" id="reloadSiteContent" class="admin-btn ghost">Reload saved content</button></div>
+      <form id="siteSettingsForm">
+        <h3 class="editor-section-title">Hero / opening section</h3>
+        <label>Small heading<input id="siteHeroKicker" class="admin-input"></label>
+        <div class="admin-cols"><label>Main heading<input id="siteHeroTitle" class="admin-input"></label><label>Highlighted words<input id="siteHeroHighlight" class="admin-input"></label></div>
+        <label>Introduction<textarea id="siteHeroLead" class="admin-input"></textarea></label>
+        <div class="admin-cols"><label>Location line<input id="siteLocation" class="admin-input"></label><label>CV download URL<input id="siteCvUrl" class="admin-input" type="url"></label></div>
+        <div class="admin-cols"><label>Video introduction URL<input id="siteVideoUrl" class="admin-input" type="url"></label><label>Hero metric value<input id="siteMetric" class="admin-input" placeholder="e.g. 82.18%"></label></div>
+        <h3 class="editor-section-title">About section</h3>
+        <div class="admin-cols"><label>Heading<input id="siteAboutHeading" class="admin-input"></label><label>Highlighted words<input id="siteAboutHighlight" class="admin-input"></label></div>
+        <label>About paragraph 1<textarea id="siteAboutP1" class="admin-input"></textarea></label><label>About paragraph 2<textarea id="siteAboutP2" class="admin-input"></textarea></label>
+        <label>About facts — one per line, format: value | label<textarea id="siteFacts" class="admin-input" placeholder="03+ | Years across operations&#10;10+ | Analytics & improvement projects&#10;06 | Core analytical tools"></textarea></label>
+        <h3 class="editor-section-title">Experience timeline</h3>
+        <label>One experience per line, format: period | role / degree | company / institution | description<textarea id="siteExperience" class="admin-input" rows="8"></textarea></label>
+        <h3 class="editor-section-title">Skills & methods</h3>
+        <label>One group per line, format: group title | tools and methods<textarea id="siteSkills" class="admin-input" rows="5"></textarea></label>
+        <h3 class="editor-section-title">Projects section</h3>
+        <div class="admin-cols"><label>Section heading<input id="siteProjectsHeading" class="admin-input"></label><label>Highlighted words<input id="siteProjectsHighlight" class="admin-input"></label></div>
+        <label>Projects introduction<textarea id="siteProjectsDescription" class="admin-input"></textarea></label>
+        <h3 class="editor-section-title">Contact & footer</h3>
+        <div class="admin-cols"><label>Contact heading<input id="siteContactHeading" class="admin-input"></label><label>Highlighted words<input id="siteContactHighlight" class="admin-input"></label></div>
+        <div class="admin-cols"><label>Email<input id="siteEmail" class="admin-input" type="email"></label><label>WhatsApp URL<input id="siteWhatsApp" class="admin-input" type="url"></label></div>
+        <label>LinkedIn URL<input id="siteLinkedIn" class="admin-input" type="url"></label>
+        <div class="admin-cols"><label>Footer name<input id="siteFooterName" class="admin-input"></label><label>Footer focus line<input id="siteFooterFocus" class="admin-input"></label></div>
+        <button class="admin-btn" type="submit">Save website content</button><p id="siteSettingsStatus" role="status"></p>
+      </form>
+    </section>
+    <hr><div class="admin-head"><div><p class="kicker">PROJECT MANAGEMENT</p><h2>Project library</h2></div></div>
     <form id="form">
       <input id="id" type="hidden">
       <div class="admin-cols"><label>Title<input id="title" class="admin-input" required></label><label>Category<input id="category" class="admin-input" placeholder="MANUFACTURING ANALYTICS"></label></div>
@@ -25,5 +55,5 @@
     <hr><div class="admin-list-head"><h2>Projects</h2><span>Drag to reorder</span></div><div id="list"></div>
   </section>
 </main>
-<script type="module" src="admin.js"></script>
+<script type="module" src="admin.js"></script><script type="module" src="site-editor.js"></script>
 </body></html>
